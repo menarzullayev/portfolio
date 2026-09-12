@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "Shaxsiy portfolio va blog — Next.js, Supabase, admin panel bilan",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
