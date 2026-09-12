@@ -1,0 +1,34 @@
+{
+  "name": "portfolio-sayt",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shaxsiy portfolio va blog — Next.js, Supabase, admin panel bilan",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.4.7",
+    "highlight.js": "^11.10.0",
+    "lucide-react": "^0.474.0",
+    "next": "^15.5.4",
+    "next-themes": "^0.4.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-markdown": "^9.0.1",
+    "rehype-highlight": "^7.0.1",
+    "remark-gfm": "^4.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.4",
+    "@types/node": "^22.13.1",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "tailwindcss": "^4.1.4",
+    "typescript": "^5.7.3"
+  }
+}

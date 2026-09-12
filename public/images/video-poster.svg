@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <rect width="1280" height="720" fill="#0f1115"/>
+  <circle cx="640" cy="360" r="70" fill="#4f46e5"/>
+  <polygon points="620,330 620,390 672,360" fill="#ffffff"/>
+  <text x="640" y="500" text-anchor="middle" font-family="Inter, Segoe UI, sans-serif" font-size="24" fill="#8b91a0">60 soniyada tanishuv</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Open Graph">
+  <defs>
+    <linearGradient id="og" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#07080a"/>
+      <stop offset="100%" stop-color="#12141c"/>
+    </linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#og)"/>
+  <circle cx="1000" cy="120" r="260" fill="#4f46e5" opacity="0.16"/>
+  <circle cx="180" cy="560" r="220" fill="#06b6d4" opacity="0.12"/>
+  <rect x="80" y="90" width="70" height="7" rx="3.5" fill="url(#acc)"/>
+  <text x="80" y="240" font-family="Inter, Segoe UI, sans-serif" font-size="72" font-weight="700" fill="#f3f4f6">Saidakbar Narzullayev</text>
+  <text x="80" y="308" font-family="Inter, Segoe UI, sans-serif" font-size="32" fill="#8b91a0">Software injener · Kompyuter ko&#8217;rish</text>
+  <text x="80" y="408" font-family="Inter, Segoe UI, sans-serif" font-size="25" fill="#6b7280">Kameradan bulutgacha — tizimni boshidan oxirigacha yozaman</text>
+  <rect x="80" y="468" width="220" height="52" rx="26" fill="url(#acc)"/>
+  <text x="190" y="501" text-anchor="middle" font-family="Inter, Segoe UI, sans-serif" font-size="20" font-weight="600" fill="#0a0b12">Portfolio</text>
+</svg>
