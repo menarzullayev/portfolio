@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="SilkLens">
+  <defs>
+    <linearGradient id="ogbg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#07080a"/>
+      <stop offset="100%" stop-color="#12141c"/>
+    </linearGradient>
+    <linearGradient id="ogacc2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#ogbg2)"/>
+  <circle cx="1040" cy="110" r="250" fill="#0ea5e9" opacity="0.15"/>
+  <circle cx="150" cy="580" r="210" fill="#22d3ee" opacity="0.10"/>
+
+  <rect x="80" y="86" width="70" height="7" rx="3.5" fill="url(#ogacc2)"/>
+  <text x="80" y="140" font-family="JetBrains Mono, monospace" font-size="20" fill="#0ea5e9">LOYIHA</text>
+
+  <text x="80" y="318" font-family="Inter, Segoe UI, sans-serif" font-size="62" font-weight="700" fill="#f3f4f6">SilkLens</text>
+
+  <text x="80" y="400" font-family="Inter, Segoe UI, sans-serif" font-size="26" fill="#8b91a0">Madaniy meros platformasi</text>
+
+  <rect x="80" y="530" width="4" height="34" rx="2" fill="url(#ogacc2)"/>
+  <text x="100" y="556" font-family="Inter, Segoe UI, sans-serif" font-size="22" font-weight="600" fill="#d1d5db">Saidakbar Narzullayev</text>
+  <text x="100" y="580" font-family="Inter, Segoe UI, sans-serif" font-size="17" fill="#6b7280">menarzullayev.github.io</text>
+</svg>

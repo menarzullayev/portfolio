@@ -26,6 +26,9 @@ export async function generateMetadata({
   const post = await getPost(slug);
   if (!post) return { title: '404' };
 
+  // Ijtimoiy tarmoq kartasi (Telegram, LinkedIn uchun PNG)
+  const ogImage = `/images/og/maqola-${post.slug}.png`;
+
   return {
     title: t(post.title, lang),
     description: t(post.excerpt, lang),
@@ -43,6 +46,13 @@ export async function generateMetadata({
       description: t(post.excerpt, lang),
       publishedTime: post.date,
       tags: post.tags,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: t(post.title, lang) }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t(post.title, lang),
+      description: t(post.excerpt, lang),
+      images: [ogImage],
     },
   };
 }

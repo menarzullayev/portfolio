@@ -136,6 +136,62 @@ function videoPoster() {
 </svg>`;
 }
 
+/**
+ * Alohida sahifa uchun ijtimoiy tarmoq kartasi (1200x630).
+ * Telegram, LinkedIn, X da havola ulashilganda shu rasm chiqadi.
+ */
+function ogCard(title, subtitle, badge, index) {
+  const [c1, c2] = palettes[index % palettes.length];
+  const lines = [];
+  const maxChars = 26;
+  const words = String(title).split(' ');
+  let line = '';
+  for (const word of words) {
+    if ((line + ' ' + word).trim().length > maxChars) {
+      lines.push(line.trim());
+      line = word;
+    } else {
+      line = (line + ' ' + word).trim();
+    }
+  }
+  if (line) lines.push(line.trim());
+  const shown = lines.slice(0, 3);
+
+  const titleSvg = shown
+    .map(
+      (l, i) =>
+        `<text x="80" y="${318 + i * 74}" font-family="Inter, Segoe UI, sans-serif" font-size="62" font-weight="700" fill="#f3f4f6">${esc(l)}</text>`,
+    )
+    .join('\n  ');
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="${esc(title)}">
+  <defs>
+    <linearGradient id="ogbg${index}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#07080a"/>
+      <stop offset="100%" stop-color="#12141c"/>
+    </linearGradient>
+    <linearGradient id="ogacc${index}" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="${c1}"/>
+      <stop offset="100%" stop-color="${c2}"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#ogbg${index})"/>
+  <circle cx="1040" cy="110" r="250" fill="${c1}" opacity="0.15"/>
+  <circle cx="150" cy="580" r="210" fill="${c2}" opacity="0.10"/>
+
+  <rect x="80" y="86" width="70" height="7" rx="3.5" fill="url(#ogacc${index})"/>
+  <text x="80" y="140" font-family="JetBrains Mono, monospace" font-size="20" fill="${c1}">${esc(badge)}</text>
+
+  ${titleSvg}
+
+  <text x="80" y="${318 + shown.length * 74 + 8}" font-family="Inter, Segoe UI, sans-serif" font-size="26" fill="#8b91a0">${esc(subtitle)}</text>
+
+  <rect x="80" y="530" width="4" height="34" rx="2" fill="url(#ogacc${index})"/>
+  <text x="100" y="556" font-family="Inter, Segoe UI, sans-serif" font-size="22" font-weight="600" fill="#d1d5db">Saidakbar Narzullayev</text>
+  <text x="100" y="580" font-family="Inter, Segoe UI, sans-serif" font-size="17" fill="#6b7280">menarzullayev.github.io</text>
+</svg>`;
+}
+
 /* ============================================================
    Fayllarni yozish
    ============================================================ */
@@ -155,6 +211,26 @@ const projects = [
 
 projects.forEach(([title, subtitle, meta, slug], i) => {
   writeFileSync(join(pub, 'images', 'projects', `${slug}.svg`), projectCover(title, subtitle, meta, i));
+});
+
+/* ── Sahifa kartalari (Open Graph) ───────────────────────────── */
+mkdirSync(join(pub, 'images', 'og'), { recursive: true });
+
+const ogPages = [
+  // [fayl nomi, sarlavha, tavsif, belgi]
+  ['loyiha-comnex-face-embed', 'comnex-face-embed', 'Yuz embedding quvuri', 'LOYIHA'],
+  ['loyiha-yuzdanyuz', 'YuzDanYuz — Milliy Sertifikat', 'EdTech super-ilova', 'LOYIHA'],
+  ['loyiha-silklens', 'SilkLens', 'Madaniy meros platformasi', 'LOYIHA'],
+  ['loyiha-3d-jet', '3D-Jet', 'Interaktiv 3D ko&#8217;ruvchi', 'LOYIHA'],
+  ['loyiha-anoma-gsap', 'Anoma — GSAP parallaks', 'Parallaks sahifa tajribasi', 'LOYIHA'],
+  ['loyiha-css-3d-lab', 'CSS 3D laboratoriya', 'Sof CSS 3D komponentlar', 'LOYIHA'],
+  ['maqola-nextjs-app-router-ichki-ishlashi', 'Next.js App Router qanday ishlaydi', 'Server va klient chegarasi', 'MAQOLA'],
+  ['maqola-sql-sorovni-tezlashtirish', 'SQL so&#8217;rovni tezlashtirish', 'Qadam-baqadam amaliy yo&#8217;l', 'MAQOLA'],
+  ['maqola-kod-koriki-madaniyati', 'Kod ko&#8217;rigi nima uchun bahsga aylanadi', '5 ta amaliy qoida', 'MAQOLA'],
+];
+
+ogPages.forEach(([file, title, subtitle, badge], i) => {
+  writeFileSync(join(pub, 'images', 'og', `${file}.svg`), ogCard(title, subtitle, badge, i));
 });
 
 /* ============================================================
@@ -239,4 +315,17 @@ writeFileSync(join(pub, 'cv', 'saidakbar-narzullayev-cv.pdf'), buildPdf(cv));
 console.log('Resurslar tayyor:');
 console.log('  favicon.svg, images/avatar.svg, images/og.svg, images/video-poster.svg');
 console.log('  images/projects/*.svg (6 ta loyiha muqovasi)');
+console.log('  images/og/*.svg (9 ta ijtimoiy karta)');
 console.log('  cv/saidakbar-narzullayev-cv.pdf');
+console.log('');
+console.log('⚠️  MUHIM: images/og/*.svg fayllarini PNG ga ham o\'girish kerak —');
+console.log('   Telegram va LinkedIn SVG ni qo\'llab-quvvatlamaydi.');
+console.log('   Buning uchun brauzer kerak (playwright). Buyruq:');
+console.log('');
+console.log('   npx playwright screenshot --viewport-size=1200,630 \\');
+console.log('     http://127.0.0.1:8899/images/og/loyiha-comnex-face-embed.svg \\');
+console.log('     public/images/og/loyiha-comnex-face-embed.png');
+console.log('');
+console.log('   (public papkasida oddiy statik server ishga tushiring:');
+console.log('    python -m http.server 8899 --bind 127.0.0.1)');
+console.log('');

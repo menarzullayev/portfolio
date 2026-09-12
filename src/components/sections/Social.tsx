@@ -39,9 +39,22 @@ export function Testimonials({ content, locale }: { content: SiteContent; locale
             </div>
 
             <figcaption className="mt-5 flex items-center gap-3 border-t border-[var(--border)] pt-5">
-              <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-[var(--surface-2)]">
-                <Image src={item.avatar} alt={item.name} fill sizes="40px" className="object-cover" />
-              </span>
+              {item.avatar ? (
+                <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-[var(--surface-2)]">
+                  <Image src={item.avatar} alt={item.name} fill sizes="40px" className="object-cover" />
+                </span>
+              ) : (
+                <span
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--accent-soft)] text-[0.78rem] font-semibold text-[var(--accent)]"
+                  aria-hidden
+                >
+                  {item.name
+                    .split(' ')
+                    .slice(0, 2)
+                    .map((part) => part.charAt(0).toUpperCase())
+                    .join('')}
+                </span>
+              )}
               <span className="min-w-0">
                 <span className="block truncate text-[0.88rem] font-semibold">{item.name}</span>
                 <span className="block truncate text-[0.76rem] text-[var(--text-muted)]">

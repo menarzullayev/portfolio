@@ -225,10 +225,38 @@ Barcha o'rinbosar rasmlar SVG formatda — ularni almashtirish oson:
 | Rasm | Manzil |
 |---|---|
 | Avatar | `public/images/avatar.svg` |
-| Muqova (OG) | `public/images/og.svg` |
+| Umumiy muqova (OG) | `public/images/og.svg` |
+| Sahifa kartalari | `public/images/og/*.png` |
 | Mijoz rasmlari | `public/images/avatars/1.svg` … `4.svg` |
 | Loyiha muqovalari | `public/images/projects/*.svg` |
-| CV | `public/cv/aziz-karimov-cv.pdf` |
+| CV | `public/cv/saidakbar-narzullayev-cv.pdf` |
+
+### Ijtimoiy tarmoq kartalari (OG)
+
+Har bir loyiha va maqola sahifasining o'z kartasi bor — havolani Telegram, LinkedIn yoki X da ulashganda shu rasm chiqadi. Fayllar: `public/images/og/`
+
+- `loyiha-<slug>.png` — loyihalar uchun
+- `maqola-<slug>.png` — maqolalar uchun
+
+**Muhim:** SVG ni Telegram va LinkedIn qo'llab-quvvatlamaydi, shuning uchun PNG kerak.
+
+**Yangi loyiha qo'shsangiz:**
+
+1. `scripts/generate-assets.mjs` faylidagi `ogPages` ro'yxatiga qator qo'shing
+2. `node scripts/generate-assets.mjs` — SVG yaratiladi
+3. SVG ni PNG ga o'girish (brauzer kerak):
+
+```bash
+# 1. public papkasida statik server
+python -m http.server 8899 --bind 127.0.0.1
+
+# 2. har bir fayl uchun (brauzer bilan)
+npx playwright screenshot --viewport-size=1200,630 \
+  http://127.0.0.1:8899/images/og/loyiha-yangi-loyiha.svg \
+  public/images/og/loyiha-yangi-loyiha.png
+```
+
+> Kod avtomatik ravishda `loyiha-<slug>.png` faylini qidiradi — nom to'g'ri bo'lsa, boshqa sozlash kerak emas.
 
 **Loyiha muqovasini almashtirish:** rasmni `public/images/projects/` ga tashlang, so'ng `seed.ts` dagi `cover` maydonini yangilang:
 
