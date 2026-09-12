@@ -42,7 +42,7 @@ export const resources: ResourceDef[] = [
     titleField: 'title',
     fields: [
       { name: 'title', label: 'Nomi', type: 'text', required: true },
-      { name: 'slug', label: 'Manzil (slug)', type: 'text', required: true, hint: 'payflow, devmetrics — lotin harflar va chiziqcha' },
+      { name: 'slug', label: 'Manzil (slug)', type: 'text', required: true, hint: 'Faqat lotin harflar, raqam va chiziqcha. Masalan: mening-loyiham' },
       {
         name: 'category',
         label: 'Kategoriya',

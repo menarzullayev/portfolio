@@ -227,7 +227,7 @@ export const ui: Dict = {
   'footer.terms': { uz: 'Foydalanish shartlari', en: 'Terms of use' },
   'footer.sitemap': { uz: 'Sayt xaritasi', en: 'Sitemap' },
   'footer.backToTop': { uz: 'Yuqoriga', en: 'Back to top' },
-  'footer.madeIn': { uz: 'Toshkentda mehr bilan yasaldi', en: 'Made with care in Tashkent' },
+  'footer.madeIn': { uz: 'Samarqandda mehr bilan yasaldi', en: 'Made with care in Samarkand' },
 
   // 404
   'notFound.title': { uz: 'Sahifa topilmadi', en: 'Page not found' },
