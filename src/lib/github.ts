@@ -82,9 +82,23 @@ export async function getGitHubRepos(limit = 30): Promise<GitHubRepo[]> {
     `/users/${USERNAME}/repos?per_page=100&sort=pushed`,
   );
   if (!repos) return [];
+
   return repos
     .filter((r) => !r.fork && !r.archived)
-    .sort((a, b) => b.stargazers_count - a.stargazers_count)
+    .sort((a, b) => {
+      // 1) Tavsifi bor repolar oldinda — portfolio uchun mazmunliroq
+      const descA = a.description?.trim() ? 1 : 0;
+      const descB = b.description?.trim() ? 1 : 0;
+      if (descA !== descB) return descB - descA;
+
+      // 2) Keyin yulduzlar bo'yicha
+      if (a.stargazers_count !== b.stargazers_count) {
+        return b.stargazers_count - a.stargazers_count;
+      }
+
+      // 3) Oxirida — yaqinda yangilanganlar
+      return new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime();
+    })
     .slice(0, limit);
 }
 

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Award, Globe2, Newspaper, Quote, Star } from 'lucide-react';
+import { Award, Newspaper, Quote, Star } from 'lucide-react';
 import { formatDate, t, tr, type Locale } from '@/lib/i18n';
 import type { SiteContent } from '@/lib/types';
 import { Section, SectionHeading } from '../ui/Section';
@@ -177,72 +177,6 @@ export function AwardsAndPress({ content, locale }: { content: SiteContent; loca
           </StaggerGroup>
         </div>
       </div>
-    </Section>
-  );
-}
-
-/* ============================================================
-   E6 — Xizmat ko'rsatgan mijozlar xaritasi
-   ============================================================ */
-const clientCountries = [
-  { name: { uz: "O'zbekiston", en: 'Uzbekistan' }, clients: 14, flag: '🇺🇿' },
-  { name: { uz: 'Qozog‘iston', en: 'Kazakhstan' }, clients: 5, flag: '🇰🇿' },
-  { name: { uz: 'Turkiya', en: 'Türkiye' }, clients: 4, flag: '🇹🇷' },
-  { name: { uz: 'AQSH', en: 'USA' }, clients: 3, flag: '🇺🇸' },
-  { name: { uz: 'Germaniya', en: 'Germany' }, clients: 2, flag: '🇩🇪' },
-  { name: { uz: 'BAA', en: 'UAE' }, clients: 2, flag: '🇦🇪' },
-];
-
-export function ClientMap({ locale }: { locale: Locale }) {
-  const max = Math.max(...clientCountries.map((c) => c.clients));
-
-  return (
-    <Section id="map" tight>
-      <SectionHeading
-        eyebrow="Global"
-        title={tr('section.map', locale)}
-        subtitle={
-          locale === 'uz'
-            ? "Masofadan ishlash chegarani bilmaydi — 6 davlatda mijozlarim bor."
-            : 'Remote work knows no borders — clients in 6 countries.'
-        }
-      />
-
-      <StaggerGroup className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {clientCountries.map((country) => (
-          <motion.div key={country.flag} variants={staggerItem} className="card p-5">
-            <div className="flex items-center justify-between gap-3">
-              <span className="flex items-center gap-2.5">
-                <span className="text-lg" aria-hidden>
-                  {country.flag}
-                </span>
-                <span className="text-[0.88rem] font-medium">{t(country.name, locale)}</span>
-              </span>
-              <span className="font-mono text-[0.78rem] text-[var(--accent)]">
-                {country.clients}
-              </span>
-            </div>
-            <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-[var(--surface-2)]">
-              <motion.div
-                initial={{ width: 0 }}
-                whileInView={{ width: `${(country.clients / max) * 100}%` }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}
-                className="h-full rounded-full bg-[var(--accent)]"
-              />
-            </div>
-          </motion.div>
-        ))}
-      </StaggerGroup>
-
-      <Reveal delay={0.2}>
-        <p className="mt-6 inline-flex items-center gap-2 text-[0.8rem] text-[var(--text-muted)]">
-          <Globe2 size={14} className="text-[var(--accent)]" />
-          {locale === 'uz'
-            ? "Jami 30 ta mijoz, 6 ta davlat, 4 ta vaqt mintaqasi"
-            : '30 clients total, 6 countries, 4 time zones'}
-        </p>
-      </Reveal>
     </Section>
   );
 }

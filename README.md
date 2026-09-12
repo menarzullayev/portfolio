@@ -136,6 +136,8 @@ O'zingiz joylagan Umami serveringiz bo'lsa, `NEXT_PUBLIC_ANALYTICS_URL` ni ko'rs
 
 `NEXT_PUBLIC_SITE_URL` ni haqiqiy domeningizga o'zgartirishni unutmang — bu SEO, RSS va sitemap uchun muhim.
 
+> Batafsil qadam-baqadam qo'llanma: **[`docs/deploy.md`](docs/deploy.md)** — muhit o'zgaruvchilari jadvali, domen ulash, muammolarni bartaraf etish bilan.
+
 ---
 
 ## Papka tuzilishi
@@ -172,7 +174,8 @@ src/
 
 ## Hujjatlar
 
-- **[`docs/sozlash.md`](docs/sozlash.md)** — amaliy sozlash qo'llanmasi: ranglar, shrift, bo'lim qo'shish/o'chirish, kontent, rasmlar, muammolarni bartaraf etish
+- **[`docs/deploy.md`](docs/deploy.md)** — internetga chiqarish: Vercel, muhit o'zgaruvchilari, domen, muammolarni bartaraf etish
+- **[`docs/sozlash.md`](docs/sozlash.md)** — amaliy sozlash qo'llanmasi: ranglar, shrift, bo'lim qo'shish/o'chirish, kontent, rasmlar
 - **[`docs/tekshirish.md`](docs/tekshirish.md)** — har bir ma'lumot qayerdan olingani va ko'rib chiqilishi kerak bo'lgan matnlar
 - **[`docs/sayt-bolimlari.md`](docs/sayt-bolimlari.md)** — 45 ta bo'limning to'liq katalogi
 
