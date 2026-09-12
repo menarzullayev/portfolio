@@ -7,6 +7,10 @@ import { isLocale, t, tr } from '@/lib/i18n';
 import { getProject, getProjects } from '@/lib/data';
 import { Reveal } from '@/components/ui/Reveal';
 
+// Kontent admin panelda boshqariladi — har sorovda yangi malumot olinadi.
+// Statik keshlash admin ozgarishlarini korinmas qilib qoyadi.
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
   const projects = await getProjects();
   return projects.map((project) => ({ slug: project.slug }));

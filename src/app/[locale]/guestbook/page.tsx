@@ -5,6 +5,10 @@ import { getSiteContent } from '@/lib/data';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Guestbook } from '@/components/sections/Extras';
 
+// Kontent admin panelda boshqariladi — har sorovda yangi malumot olinadi.
+// Statik keshlash admin ozgarishlarini korinmas qilib qoyadi.
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({
   params,
 }: {

@@ -59,6 +59,24 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 ---
 
+## 2.5. Hududni tanlash (tezlik uchun muhim)
+
+Sayt har bir so'rovda Supabase'dan ma'lumot oladi (admin panelda kiritilgan
+o'zgarishlar darhol ko'rinishi uchun). Shuning uchun **Vercel funksiyasi
+Supabase bilan bir hududda bo'lishi** tezlikni sezilarli oshiradi.
+
+Sizning Supabase loyihangiz **`ap-southeast-2` (Sidney)** da joylashgan.
+
+Vercel'da hududni o'zgartirish:
+
+1. **Settings → Functions → Function Region**
+2. **Sydney (syd1)** ni tanlang
+3. **Redeploy** qiling
+
+> Farqi: noto'g'ri hududda har bir so'rov ~300-500 ms sekinroq bo'ladi.
+
+---
+
 ## 3. Domenni ulash
 
 1. Vercel → **Settings → Domains** → **Add**

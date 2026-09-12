@@ -5,6 +5,10 @@ import { getProjects } from '@/lib/data';
 import { Projects } from '@/components/sections/Projects';
 import { PageHeader } from '@/components/layout/PageHeader';
 
+// Kontent admin panelda boshqariladi — har sorovda yangi malumot olinadi.
+// Statik keshlash admin ozgarishlarini korinmas qilib qoyadi.
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({
   params,
 }: {

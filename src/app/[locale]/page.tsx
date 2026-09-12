@@ -23,12 +23,17 @@ import {
 import { Faq, Pricing, Services, TermsAndSlots } from '@/components/sections/Services';
 import { Contact, CtaBanner } from '@/components/sections/Contact';
 import {
+
   Changelog,
   CommentsCta,
   Guestbook,
   MiniGame,
   Uses,
 } from '@/components/sections/Extras';
+
+// Kontent admin panelda boshqariladi — har sorovda yangi malumot olinadi.
+// Statik keshlash admin ozgarishlarini korinmas qilib qoyadi.
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({
   params,

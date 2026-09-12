@@ -22,6 +22,12 @@ import type {
  * Shu tufayli sayt baza ulanmasa ham to'liq ishlaydi.
  */
 
+/**
+ * Jadvaldan o'qish.
+ * MUHIM: bo'sh natija ham massiv sifatida qaytadi (null emas) —
+ * shunda "hammasini o'chirdim" holati to'g'ri ishlaydi.
+ * null faqat xato yoki baza sozlanmagan holatda qaytadi.
+ */
 async function readTable<T>(table: string, order?: { column: string; ascending?: boolean }): Promise<T[] | null> {
   if (!isSupabaseConfigured) return null;
   const client = getPublicClient();
@@ -30,7 +36,7 @@ async function readTable<T>(table: string, order?: { column: string; ascending?:
     let query = client.from(table).select('*');
     if (order) query = query.order(order.column, { ascending: order.ascending ?? true });
     const { data, error } = await query;
-    if (error || !data || data.length === 0) return null;
+    if (error || !data) return null;
     return rowsToApp<T>(data);
   } catch {
     return null;
@@ -64,20 +70,35 @@ export async function getSiteContent(): Promise<SiteContent> {
 
   const dbSettings = settingsRows?.[0];
 
+  /**
+   * Baza "to'ldirilgan" hisoblanadi, agar sozlamalar qatori mavjud bo'lsa.
+   *
+   * - To'ldirilmagan (jadvallar bo'sh) → butun kontent namunadan (seed) olinadi.
+   *   Bu baza endi ulangan, lekin hali to'ldirilmagan holat uchun.
+   * - To'ldirilgan → baza ustuvor. Bo'sh jadval bo'sh bo'lib qoladi,
+   *   ya'ni admin panelda hamma loyihani o'chirsangiz, ular qaytib kelmaydi.
+   */
+  const isSeeded = Boolean(dbSettings);
+
+  const pick = <T>(rows: T[] | null, fallback: T[]): T[] => {
+    if (!isSeeded) return fallback;
+    return rows ?? fallback;
+  };
+
   return {
     ...seedContent,
     settings: dbSettings
       ? { ...seedContent.settings, ...stripId(dbSettings) }
       : seedContent.settings,
-    socials: socials ?? seedContent.socials,
-    projects: projects ?? seedContent.projects,
-    posts: (posts ?? seedContent.posts).filter((p) => p.published !== false),
-    services: services ?? seedContent.services,
-    faq: faqs ?? seedContent.faq,
-    testimonials: testimonials ?? seedContent.testimonials,
-    guestbook: guestbook ?? seedContent.guestbook,
-    uses: uses ?? seedContent.uses,
-    changelog: changelog ?? seedContent.changelog,
+    socials: pick(socials, seedContent.socials),
+    projects: pick(projects, seedContent.projects),
+    posts: pick(posts, seedContent.posts).filter((p) => p.published !== false),
+    services: pick(services, seedContent.services),
+    faq: pick(faqs, seedContent.faq),
+    testimonials: pick(testimonials, seedContent.testimonials),
+    guestbook: pick(guestbook, seedContent.guestbook),
+    uses: pick(uses, seedContent.uses),
+    changelog: pick(changelog, seedContent.changelog),
   };
 }
 

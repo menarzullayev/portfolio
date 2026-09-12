@@ -1,7 +1,26 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { isAuthenticated } from '@/lib/auth';
 import { getAdminClient, isSupabaseConfigured } from '@/lib/supabase';
 import { rowsToApp, toSnake } from '@/lib/case';
+
+/**
+ * Kontent o'zgargach sahifalar keshini yangilaydi.
+ * Busiz admin panelda kiritilgan o'zgarish saytda ko'rinmaydi —
+ * sahifalar statik yaratilgan bo'ladi.
+ */
+function refreshPages() {
+  for (const locale of ['uz', 'en']) {
+    revalidatePath(`/${locale}`, 'layout');
+    revalidatePath(`/${locale}/blog`);
+    revalidatePath(`/${locale}/projects`);
+    revalidatePath(`/${locale}/guestbook`);
+    revalidatePath(`/${locale}/changelog`);
+    revalidatePath(`/${locale}/uses`);
+    revalidatePath(`/${locale}/now`);
+  }
+  revalidatePath('/sitemap.xml');
+}
 
 /** Ruxsat etilgan jadvallar — ixtiyoriy jadval nomini bloklaydi */
 const TABLES = [
@@ -82,6 +101,7 @@ export async function POST(
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+  refreshPages();
   return NextResponse.json({ data: rowsToApp([data])[0] });
 }
 
@@ -108,6 +128,7 @@ export async function PATCH(
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+  refreshPages();
   return NextResponse.json({ data: rowsToApp([data])[0] });
 }
 
@@ -126,6 +147,7 @@ export async function DELETE(
 
   const { error } = await result.client.from(result.name).delete().eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+  refreshPages();
   return NextResponse.json({ ok: true });
 }
 

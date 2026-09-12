@@ -11,6 +11,10 @@ import { ShareButtons } from '@/components/sections/ShareButtons';
 import { CommentsCta } from '@/components/sections/Extras';
 import { Reveal } from '@/components/ui/Reveal';
 
+// Kontent admin panelda boshqariladi — har sorovda yangi malumot olinadi.
+// Statik keshlash admin ozgarishlarini korinmas qilib qoyadi.
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
   const posts = await getPosts();
   return posts.map((post) => ({ slug: post.slug }));
