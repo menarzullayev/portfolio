@@ -277,3 +277,15 @@ on conflict (id) do nothing;
 drop policy if exists "public_read_media" on storage.objects;
 create policy "public_read_media" on storage.objects
   for select using (bucket_id = 'media');
+
+-- ============================================================
+-- MIGRATSIYALAR
+-- Sxema allaqachon yaratilgan bo'lsa, yangi ustunlar shu yerda qo'shiladi.
+-- (create table if not exists mavjud jadvalga ustun qo'shmaydi, shuning uchun
+--  keyinchalik qo'shilgan har bir ustun shu bo'limga yoziladi)
+-- ============================================================
+alter table site_settings add column if not exists hero_badge jsonb
+  default '{"uz":"","en":""}'::jsonb;
+
+-- PostgREST keshini yangilash — yangi ustun darhol ko'rinishi uchun
+notify pgrst, 'reload schema';
