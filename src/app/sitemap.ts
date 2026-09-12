@@ -2,6 +2,9 @@ import type { MetadataRoute } from 'next';
 import { getPosts, getProjects } from '@/lib/data';
 import { LOCALES } from '@/lib/i18n';
 
+// Sitemap bazadan o'qiydi — yangi loyiha/maqola qo'shilganda yangilanishi kerak
+export const dynamic = 'force-dynamic';
+
 /** Qidiruv tizimlari uchun sayt xaritasi */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';

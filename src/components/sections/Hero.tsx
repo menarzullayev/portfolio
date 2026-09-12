@@ -89,9 +89,18 @@ export function Hero({ content, locale }: { content: SiteContent; locale: Locale
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-6 max-w-xl text-[1.05rem] leading-relaxed text-[var(--text-muted)]"
+              className="mt-6 max-w-xl text-[1.15rem] font-medium leading-snug text-[var(--text-soft)]"
             >
-              {t(settings.tagline, locale)} — {t(settings.shortBio, locale)}
+              {t(settings.tagline, locale)}
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.56 }}
+              className="mt-3 max-w-xl text-[0.95rem] leading-relaxed text-[var(--text-muted)]"
+            >
+              {t(settings.shortBio, locale)}
             </motion.p>
 
             {/* Tugmalar */}
