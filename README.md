@@ -77,6 +77,8 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGci...
 
 Manzil: `/admin` · Parol: `.env.local` dagi `ADMIN_PASSWORD` (standart: `admin123`)
 
+> **Sozlash holati** — panelning bosh sahifasida qaysi xizmatlar ulanganini ko'rsatadigan panel bor: Supabase, GitHub, email, analitika, admin xavfsizligi va sayt manzili. Har biri uchun nima qilish kerakligi yozilgan. Standart parol ishlatilsa ogohlantiradi.
+
 **Imkoniyatlar:**
 
 - **Loyihalar** — qo'shish, tahrirlash, o'chirish, kategoriya va teglar

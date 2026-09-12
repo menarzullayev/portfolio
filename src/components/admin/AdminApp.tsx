@@ -748,6 +748,145 @@ function UploadPanel() {
 /* ============================================================
    Umumiy ko'rinish
    ============================================================ */
+interface StatusCheck {
+  id: string;
+  label: string;
+  status: 'ok' | 'warning' | 'error' | 'missing';
+  detail: string;
+  action: string;
+  vars: { name: string; set: boolean }[];
+}
+
+function StatusPanel() {
+  const [checks, setChecks] = useState<StatusCheck[] | null>(null);
+  const [summary, setSummary] = useState<{
+    ok: number;
+    warning: number;
+    error: number;
+    missing: number;
+    total: number;
+  } | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/admin/status');
+      const json = await res.json();
+      if (res.ok) {
+        setChecks(json.checks ?? []);
+        setSummary(json.summary ?? null);
+      }
+    } catch {
+      /* e'tiborsiz */
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  const style = (status: StatusCheck['status']) => {
+    switch (status) {
+      case 'ok':
+        return { icon: Check, color: 'var(--success)', bg: 'var(--success)' };
+      case 'warning':
+        return { icon: AlertTriangle, color: 'var(--warning)', bg: 'var(--warning)' };
+      case 'error':
+        return { icon: AlertTriangle, color: 'var(--danger)', bg: 'var(--danger)' };
+      default:
+        return { icon: X, color: 'var(--text-muted)', bg: 'var(--text-muted)' };
+    }
+  };
+
+  return (
+    <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-6">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h3 className="flex items-center gap-2 text-[0.88rem] font-semibold">
+          <Database size={15} className="text-[var(--accent)]" />
+          Sozlash holati
+        </h3>
+        <button
+          type="button"
+          onClick={() => void load()}
+          className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] px-3 py-1.5 text-[0.75rem] font-medium hover:border-[var(--accent)] hover:text-[var(--accent)]"
+        >
+          {loading ? <Loader2 size={12} className="animate-spin" /> : <RefreshCw size={12} />}
+          Tekshirish
+        </button>
+      </div>
+
+      {summary && (
+        <p className="mt-3 text-[0.78rem] text-[var(--text-muted)]">
+          {summary.ok} ta tayyor
+          {summary.warning > 0 && ` · ${summary.warning} ta ogohlantirish`}
+          {summary.error > 0 && ` · ${summary.error} ta xato`}
+          {summary.missing > 0 && ` · ${summary.missing} ta sozlanmagan`}
+        </p>
+      )}
+
+      <div className="mt-5 space-y-2.5">
+        {loading && !checks && (
+          <p className="flex items-center gap-2 text-[0.82rem] text-[var(--text-muted)]">
+            <Loader2 size={14} className="animate-spin" /> Tekshirilmoqda…
+          </p>
+        )}
+
+        {checks?.map((check) => {
+          const s = style(check.status);
+          const Icon = s.icon;
+          return (
+            <div
+              key={check.id}
+              className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4"
+            >
+              <div className="flex items-start gap-3">
+                <span
+                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full"
+                  style={{ background: `color-mix(in srgb, ${s.bg} 18%, transparent)` }}
+                >
+                  <Icon size={12} style={{ color: s.color }} />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[0.85rem] font-medium text-[var(--text)]">{check.label}</p>
+                  <p className="mt-1 text-[0.78rem] leading-relaxed text-[var(--text-muted)]">
+                    {check.detail}
+                  </p>
+
+                  {check.action && (
+                    <p className="mt-2 text-[0.75rem] leading-relaxed text-[var(--text-soft)]">
+                      → {check.action}
+                    </p>
+                  )}
+
+                  {check.vars.length > 0 && (
+                    <div className="mt-2.5 flex flex-wrap gap-1.5">
+                      {check.vars.map((v) => (
+                        <span
+                          key={v.name}
+                          className={`rounded-md border px-2 py-0.5 font-mono text-[0.68rem] ${
+                            v.set
+                              ? 'border-[var(--border)] text-[var(--text-muted)]'
+                              : 'border-[var(--warning)] text-[var(--warning)]'
+                          }`}
+                        >
+                          {v.set ? '✓' : '○'} {v.name}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function Overview() {
   return (
     <div>
@@ -773,24 +912,7 @@ function Overview() {
         ))}
       </div>
 
-      <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-6">
-        <h3 className="flex items-center gap-2 text-[0.88rem] font-semibold">
-          <Database size={15} className="text-[var(--accent)]" />
-          Supabase’ni ulash
-        </h3>
-        <ol className="mt-4 space-y-2.5 text-[0.82rem] leading-relaxed text-[var(--text-muted)]">
-          <li>1. supabase.com saytida bepul loyiha oching.</li>
-          <li>
-            2. <code className="rounded bg-[var(--surface)] px-1.5 py-0.5 font-mono text-[0.75rem]">supabase/schema.sql</code> faylini
-            SQL Editor’da ishga tushiring.
-          </li>
-          <li>
-            3. <code className="rounded bg-[var(--surface)] px-1.5 py-0.5 font-mono text-[0.75rem]">.env</code> fayliga
-            URL va kalitlarni yozing.
-          </li>
-          <li>4. Serverni qayta ishga tushiring — panel to‘liq ishlaydi.</li>
-        </ol>
-      </div>
+      <StatusPanel />
     </div>
   );
 }
