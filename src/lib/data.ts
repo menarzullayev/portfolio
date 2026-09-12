@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache';
 import { rowsToApp } from './case';
 import { getPublicClient, isSupabaseConfigured } from './supabase';
 import { seedContent } from '@/content/seed';
@@ -43,7 +44,7 @@ async function readTable<T>(table: string, order?: { column: string; ascending?:
   }
 }
 
-export async function getSiteContent(): Promise<SiteContent> {
+async function loadSiteContent(): Promise<SiteContent> {
   const [
     settingsRows,
     projects,
@@ -110,20 +111,39 @@ function stripId(row: unknown): Partial<SiteSettings> {
   return copy as Partial<SiteSettings>;
 }
 
-export async function getProjects(): Promise<Project[]> {
+async function loadProjects(): Promise<Project[]> {
   const rows = await readTable<Project>('projects', { column: 'created_at', ascending: false });
   return rows ?? seedContent.projects;
 }
 
-export async function getProject(slug: string): Promise<Project | undefined> {
-  const all = await getProjects();
-  return all.find((p) => p.slug === slug);
-}
-
-export async function getPosts(): Promise<Post[]> {
+async function loadPosts(): Promise<Post[]> {
   const rows = await readTable<Post>('posts', { column: 'date', ascending: false });
   const list = rows ?? seedContent.posts;
   return list.filter((p) => p.published !== false);
+}
+
+/* ────────────────────────────────────────────────────────────────
+   Keshlangan o'qish.
+
+   Nega kesh kerak: har bir so'rovda Supabase'ga 10 ta parallel so'rov
+   ketadi (~400 ms). Kesh bilan takroriy so'rovlar ~20 ms da bajariladi.
+
+   Nega yangilanish yo'qolmaydi: kesh "content" tegi bilan belgilangan.
+   Admin panelda har qanday o'zgarish bo'lganda revalidateTag('content')
+   chaqiriladi — kesh darhol tozalanadi.
+
+   revalidate: 60 — xavfsizlik to'ri: agar teg ishlamay qolsa ham,
+   kontent bir daqiqada yangilanadi.
+   ──────────────────────────────────────────────────────────────── */
+const CACHE_OPTIONS = { tags: ['content'], revalidate: 60 };
+
+export const getSiteContent = unstable_cache(loadSiteContent, ['site-content'], CACHE_OPTIONS);
+export const getProjects = unstable_cache(loadProjects, ['site-projects'], CACHE_OPTIONS);
+export const getPosts = unstable_cache(loadPosts, ['site-posts'], CACHE_OPTIONS);
+
+export async function getProject(slug: string): Promise<Project | undefined> {
+  const all = await getProjects();
+  return all.find((p) => p.slug === slug);
 }
 
 export async function getPost(slug: string): Promise<Post | undefined> {

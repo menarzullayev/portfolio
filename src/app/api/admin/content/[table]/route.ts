@@ -1,15 +1,20 @@
 import { NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { isAuthenticated } from '@/lib/auth';
 import { getAdminClient, isSupabaseConfigured } from '@/lib/supabase';
 import { rowsToApp, toSnake } from '@/lib/case';
 
 /**
- * Kontent o'zgargach sahifalar keshini yangilaydi.
- * Busiz admin panelda kiritilgan o'zgarish saytda ko'rinmaydi —
- * sahifalar statik yaratilgan bo'ladi.
+ * Kontent o'zgargach keshni tozalaydi.
+ *
+ * `revalidateTag('content')` — asosiy mexanizm: kontent keshi darhol
+ * tozalanadi va keyingi so'rovda yangi ma'lumot olinadi.
+ *
+ * `revalidatePath` — sahifa darajasidagi kesh uchun qo'shimcha.
  */
 function refreshPages() {
+  revalidateTag('content');
+
   for (const locale of ['uz', 'en']) {
     revalidatePath(`/${locale}`, 'layout');
     revalidatePath(`/${locale}/blog`);
