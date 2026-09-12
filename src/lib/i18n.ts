@@ -169,7 +169,7 @@ export const ui: Dict = {
   'form.email': { uz: 'Email manzilingiz', en: 'Your email' },
   'form.subject': { uz: 'Mavzu', en: 'Subject' },
   'form.message': { uz: 'Xabar', en: 'Message' },
-  'form.namePlaceholder': { uz: 'Masalan: Aziz Karimov', en: 'e.g. John Smith' },
+  'form.namePlaceholder': { uz: 'Ismingizni yozing', en: 'Type your name' },
   'form.emailPlaceholder': { uz: 'siz@example.com', en: 'you@example.com' },
   'form.messagePlaceholder': { uz: 'Loyihangiz haqida qisqacha yozing…', en: 'Tell me briefly about your project…' },
   'form.success': { uz: 'Xabar yuborildi! Tez orada javob beraman.', en: 'Message sent! I will reply soon.' },
