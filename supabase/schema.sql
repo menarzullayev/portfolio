@@ -31,6 +31,7 @@ create table if not exists site_settings (
   hero_video_url    text default '',
   voice_intro_url   text default '',
   years_experience  int default 0,
+  hero_badge        jsonb default '{"uz":"","en":""}'::jsonb,
   created_at        timestamptz default now(),
   updated_at        timestamptz default now()
 );

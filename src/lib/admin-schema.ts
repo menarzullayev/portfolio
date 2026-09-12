@@ -212,6 +212,7 @@ export const settingsFields: FieldDef[] = [
   { name: 'calendarUrl', label: 'Suhbat belgilash havolasi', type: 'text' },
   { name: 'avatar', label: 'Avatar manzili', type: 'text' },
   { name: 'yearsExperience', label: 'Tajriba (yil)', type: 'number' },
+  { name: 'heroBadge', label: 'Hero belgisi', type: 'bilingual', wide: true, hint: 'Masalan: 25+ ochiq kod loyihasi' },
   { name: 'heroVideoUrl', label: 'Tanishtiruv videosi', type: 'text' },
   { name: 'voiceIntroUrl', label: 'Ovozli tanishtiruv (mp3)', type: 'text' },
 ];

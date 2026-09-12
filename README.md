@@ -194,6 +194,9 @@ npm run start    # Qurilgan versiyani ishga tushirish
 npm run lint     # Kodni tekshirish
 
 node scripts/generate-assets.mjs   # Rasm o'rinbosarlarini qayta yaratish
+node scripts/supabase-setup.mjs    # Sxemani ishga tushirish (12 jadval, RLS, indekslar)
+node scripts/seed-database.mjs     # Bazani kontent bilan to'ldirish
+node scripts/seed-database.mjs --force   # Mavjud ma'lumotni almashtirib to'ldirish
 ```
 
 **Build natijasini boshqa papkaga yozish** (masalan, ikki nusxani yonma-yon sinash uchun):
