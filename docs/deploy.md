@@ -4,6 +4,43 @@ Saytni internetga chiqarish — qadam-baqadam. Taxminan 10 daqiqa vaqt oladi va 
 
 ---
 
+## ✅ Sayt allaqachon joylashtirilgan
+
+| | |
+|---|---|
+| **Jonli manzil** | https://portfolio-narzullayevme-s-projects.vercel.app |
+| **Admin panel** | https://portfolio-narzullayevme-s-projects.vercel.app/admin |
+| **Vercel loyihasi** | `portfolio` |
+| **Hudud** | Sydney (`syd1`) — Supabase bilan bir joyda |
+| **GitHub** | [menarzullayev/portfolio](https://github.com/menarzullayev/portfolio) |
+
+**Yangilanish:** `git push` qilsangiz, Vercel **avtomatik** qayta quradi. Qo'lda hech narsa qilish shart emas.
+
+**Qo'lda qayta deploy qilish kerak bo'lsa:**
+
+```bash
+VERCEL_TOKEN=xxx node scripts/vercel-deploy.mjs
+```
+
+---
+
+## ⚠️ Muhim: yangi loyihada himoya yoqilgan bo'ladi
+
+Vercel yangi loyihalarda **Deployment Protection** ni standart yoqadi — sayt 302 qaytaradi va kontent ko'rinmaydi. O'chirish:
+
+Vercel → **Settings → Deployment Protection → Vercel Authentication → Disabled**
+
+Yoki API orqali:
+
+```bash
+curl -X PATCH "https://api.vercel.com/v9/projects/portfolio" \
+  -H "Authorization: Bearer $VERCEL_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"ssoProtection":null}'
+```
+
+---
+
 ## 1. Supabase'ni tayyorlash
 
 Agar hali qilmagan bo'lsangiz:
@@ -63,17 +100,14 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 Sayt har bir so'rovda Supabase'dan ma'lumot oladi (admin panelda kiritilgan
 o'zgarishlar darhol ko'rinishi uchun). Shuning uchun **Vercel funksiyasi
-Supabase bilan bir hududda bo'lishi** tezlikni sezilarli oshiradi.
+Supabase bilan bir hududda bo'lishi** ma'qul.
 
-Sizning Supabase loyihangiz **`ap-southeast-2` (Sidney)** da joylashgan.
+Supabase loyihangiz **`ap-southeast-2` (Sidney)** da — Vercel funksiyasi ham
+` syd1` ga o'rnatilgan.
 
-Vercel'da hududni o'zgartirish:
-
-1. **Settings → Functions → Function Region**
-2. **Sydney (syd1)** ni tanlang
-3. **Redeploy** qiling
-
-> Farqi: noto'g'ri hududda har bir so'rov ~300-500 ms sekinroq bo'ladi.
+> **Eslatma:** statik sahifa ham ~600 ms TTFB ko'rsatdi. Bu — tarmoq
+> kechikishi (foydalanuvchi → Vercel chekkasi), ilovaning sekinligi emas.
+> Dinamik sahifa faqat ~100 ms qo'shadi.
 
 ---
 
