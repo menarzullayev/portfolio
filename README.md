@@ -2,6 +2,9 @@
 
 Next.js 15 asosida qurilgan, to'liq dinamik shaxsiy sayt: portfolio, blog, xizmatlar, narxlar va admin panel.
 
+**🌐 Jonli manzil:** https://portfolio-narzullayevme-s-projects.vercel.app
+**🔐 Admin panel:** [/admin](https://portfolio-narzullayevme-s-projects.vercel.app/admin)
+
 ---
 
 ## Nima bor
