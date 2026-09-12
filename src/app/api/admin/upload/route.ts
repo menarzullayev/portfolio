@@ -19,7 +19,17 @@ export async function POST(request: Request) {
     );
   }
 
-  const formData = await request.formData();
+  // multipart/form-data bo'lmasa formData() xato beradi — ushlab qolamiz
+  let formData: FormData;
+  try {
+    formData = await request.formData();
+  } catch {
+    return NextResponse.json(
+      { error: 'invalid_form_data', message: 'Fayl multipart/form-data ko‘rinishida yuborilishi kerak.' },
+      { status: 400 },
+    );
+  }
+
   const file = formData.get('file');
 
   if (!(file instanceof File)) {
