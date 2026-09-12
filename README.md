@@ -171,6 +171,7 @@ src/
 ## Hujjatlar
 
 - **[`docs/sozlash.md`](docs/sozlash.md)** — amaliy sozlash qo'llanmasi: ranglar, shrift, bo'lim qo'shish/o'chirish, kontent, rasmlar, muammolarni bartaraf etish
+- **[`docs/tekshirish.md`](docs/tekshirish.md)** — har bir ma'lumot qayerdan olingani va ko'rib chiqilishi kerak bo'lgan matnlar
 - **[`docs/sayt-bolimlari.md`](docs/sayt-bolimlari.md)** — 45 ta bo'limning to'liq katalogi
 
 ---
