@@ -25,6 +25,25 @@ export default async function LocaleLayout({
   const content = await getSiteContent();
   const telegram = content.socials.find((s) => s.icon === 'telegram')?.url;
 
+  // Faqat mazmuni bor bo'limlar menyuda ko'rinadi
+  const sectionAvailability: Record<string, boolean> = {
+    about: true,
+    skills: content.skills.length > 0,
+    experience: content.experience.length > 0,
+    projects: content.projects.length > 0,
+    services: content.services.length > 0,
+    blog: content.posts.length > 0,
+    pricing: content.pricing.length > 0,
+    faq: content.faq.length > 0,
+    now: content.now.length > 0,
+    uses: content.uses.length > 0,
+    guestbook: true,
+    changelog: content.changelog.length > 0,
+  };
+  const enabledSections = Object.entries(sectionAvailability)
+    .filter(([, ok]) => ok)
+    .map(([id]) => id);
+
   return (
     <>
       <LangSetter locale={locale} />
@@ -34,6 +53,7 @@ export default async function LocaleLayout({
         locale={locale}
         name={content.settings.name}
         initials={content.settings.initials}
+        enabled={enabledSections}
       />
       <main id="main" className="relative">
         {children}

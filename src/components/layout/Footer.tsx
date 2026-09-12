@@ -13,7 +13,6 @@ export function Footer({ content, locale }: { content: SiteContent; locale: Loca
     { label: tr('nav.projects', locale), href: `/${locale}#projects` },
     { label: tr('nav.services', locale), href: `/${locale}#services` },
     { label: tr('nav.blog', locale), href: `/${locale}/blog` },
-    { label: tr('nav.pricing', locale), href: `/${locale}#pricing` },
     { label: tr('nav.contact', locale), href: `/${locale}#contact` },
   ];
 

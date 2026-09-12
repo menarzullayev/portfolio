@@ -37,14 +37,19 @@ export function Navbar({
   locale,
   name,
   initials,
+  enabled,
 }: {
   locale: Locale;
   name: string;
   initials: string;
+  /** Mavjud bo'limlar ro'yxati — bo'sh bo'limlar menyuda ko'rinmaydi */
+  enabled?: string[];
 }) {
   const pathname = usePathname() || '';
   // Bosh sahifadami? Faqat shu yerda bo'limlarga o'tish va faol bo'lim belgisi mantiqiy
   const onHome = pathname === `/${locale}` || pathname === `/${locale}/`;
+
+  const isEnabled = (id: string) => !enabled || enabled.includes(id);
 
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -61,7 +66,11 @@ export function Navbar({
   // Faol bo'limni kuzatish
   useEffect(() => {
     if (!onHome) return;
-    const ids = [...primaryItems, ...secondaryItems, { id: 'contact' }].map((i) => i.id);
+    const ids = [
+      ...availablePrimary.map((i) => i.id),
+      ...availableSecondary.map((i) => i.id),
+      'contact',
+    ];
     const sections = ids
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => Boolean(el));
@@ -91,7 +100,10 @@ export function Navbar({
 
   const labelFor = (key: string) => tr(key, locale);
 
-  const visiblePrimary = onHome ? primaryItems : primaryItems.slice(3);
+  const availablePrimary = primaryItems.filter((item) => isEnabled(item.id));
+  const availableSecondary = secondaryItems.filter((item) => isEnabled(item.id));
+
+  const visiblePrimary = onHome ? availablePrimary : availablePrimary.slice(3);
 
   return (
     <>
@@ -112,7 +124,9 @@ export function Navbar({
             <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--accent)] text-[0.8rem] font-bold text-[var(--accent-ink)] transition-transform group-hover:scale-105">
               {initials}
             </span>
-            <span className="hidden text-sm font-semibold tracking-tight sm:block">{name}</span>
+            <span className="hidden text-sm font-semibold tracking-tight whitespace-nowrap sm:block">
+              {name}
+            </span>
           </Link>
 
           {/* Asosiy menyu */}
@@ -142,6 +156,7 @@ export function Navbar({
             })}
 
             {/* "Yana" menyusi */}
+            {availableSecondary.length > 0 && (
             <div
               className="relative"
               onMouseEnter={() => setMoreOpen(true)}
@@ -182,6 +197,7 @@ export function Navbar({
                 )}
               </AnimatePresence>
             </div>
+            )}
           </div>
 
           {/* O'ng tomon */}
@@ -233,7 +249,7 @@ export function Navbar({
               variants={{ hidden: {}, show: { transition: { staggerChildren: 0.04 } } }}
               className="container-x mt-4 flex flex-col gap-1 overflow-y-auto pb-16"
             >
-              {[...primaryItems, ...secondaryItems].map((item) => (
+              {[...availablePrimary, ...availableSecondary].map((item) => (
                 <motion.div
                   key={`${item.href}-${item.labelKey}`}
                   variants={{
