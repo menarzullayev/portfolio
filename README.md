@@ -60,8 +60,8 @@ Admin panel: http://localhost:3000/admin
 
 ## Supabase ulash
 
-1. [supabase.com](https://supabase.com) saytida bepul loyiha oching.
-2. **SQL Editor** bo'limida `supabase/schema.sql` faylining butun mazmunini ishga tushiring.
+1. [supabase.com](https://supabase.com) saytida loyiha oching.
+2. Supabase CLI orqali loyihani ulab, `supabase/migrations/` dagi migratsiyalarni boshqaring.
 3. **Project Settings → API** bo'limidan quyidagilarni `.env.local` fayliga yozing:
 
 ```env
@@ -72,7 +72,33 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGci...
 
 4. Serverni qayta ishga tushiring.
 
-`schema.sql` fayli 11 ta jadval, indekslar, RLS siyosatlari va `media` rasm saqlash joyini yaratadi.
+**Schema source of truth:** `supabase/migrations/`.
+`supabase/schema.sql` hozircha eski bootstrap/reference snapshot sifatida saqlanadi; yangi schema o'zgarishlarini unga qo'shmang.
+
+### Migration workflow
+
+```bash
+# Supabase CLI bilan ishlash
+npx supabase@2.117.0 login
+npx supabase@2.117.0 link --project-ref nwemjkrantwdndjwjvlb
+
+# Production schema'dan baseline olish
+npx supabase@2.117.0 db pull --linked
+
+# Migration holatini tekshirish
+npx supabase@2.117.0 migration list
+
+# Yangi migration
+npx supabase@2.117.0 migration new <change_name>
+
+# Lokal/linked database bilan migration holatini tekshirish
+supabase migration list
+
+# Migrationlarni qo'llash
+npx supabase@2.117.0 db push
+```
+
+> Eslatma: mavjud production bazasining migration history'sini baseline bilan moslashtirish alohida operatsion qadam. Supabase CLI db pull remote schema'ni migration sifatida yozadi va history'ni moslashtirish imkonini beradi. db pull uchun Docker va remote Postgres paroli kerak bo'ladi. Bu repo o'zgarishi production schema/data'ni o'zgartirmaydi.
 
 ---
 
