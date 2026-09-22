@@ -1,0 +1,6 @@
+# Supabase CLI project configuration
+# Generated for the portfolio project.
+project_id = "nwemjkrantwdndjwjvlb"
+
+[experimental.pgdelta]
+enabled = true
