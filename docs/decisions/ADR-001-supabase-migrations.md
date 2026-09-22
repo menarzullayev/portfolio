@@ -40,6 +40,6 @@ Use **Supabase CLI migrations** as the canonical source of truth for database sc
 
 ## Current baseline
 
-`supabase/migrations/20260922230000_initial_schema.sql` captures the current schema represented by `supabase/schema.sql`, including tables, RLS policies, indexes, triggers, and the `media` storage setup.
+`supabase/migrations/20260922230000_initial_schema.sql` captures the current portfolio database baseline: 12 public tables, their current columns, RLS state/policies, indexes, triggers, and the `media` storage setup. During validation, the live project was checked directly; its migration history is currently empty while the schema already exists, confirming the drift/history gap this decision addresses.
 
 No remote migration-history repair or production migration was executed as part of this decision.
