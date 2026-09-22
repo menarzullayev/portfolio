@@ -1,6 +1,7 @@
 -- ============================================================
---  Portfolio sayt — Supabase ma'lumotlar bazasi sxemasi
---  Ishlatish: Supabase → SQL Editor → shu faylni qo'yib "Run"
+-- LEGACY / REFERENCE SNAPSHOT
+-- Canonical schema history: supabase/migrations/
+-- Do not add new schema changes here.
 -- ============================================================
 
 -- Kerakli kengaytmalar
