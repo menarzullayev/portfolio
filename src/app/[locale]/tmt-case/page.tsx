@@ -40,12 +40,12 @@ function ProductVisual({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function SectionTitle({ eyebrow, title, body }: { eyebrow: string; title: string; body?: string }) {
+function SectionTitle({ eyebrow, title, body, dark = false }: { eyebrow: string; title: string; body?: string; dark?: boolean }) {
   return (
     <div className="max-w-3xl">
       <p className="text-xs font-semibold tracking-[0.2em] text-[#8f3b2d]">{eyebrow}</p>
-      <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-[#171513] md:text-5xl">{title}</h2>
-      {body && <p className="mt-5 text-base leading-7 text-[#5d5852]">{body}</p>}
+      <h2 className={`mt-3 text-3xl font-semibold tracking-[-0.04em] md:text-5xl ${dark ? 'text-[#f4ede2]' : 'text-[#171513]'}`}>{title}</h2>
+      {body && <p className={`mt-5 text-base leading-7 ${dark ? 'text-[#aaa095]' : 'text-[#5d5852]'}`}>{body}</p>}
     </div>
   );
 }
@@ -181,7 +181,7 @@ export default async function TmtCaseStudy({
 
       <section id="social" className="bg-[#1d1a17] text-[#f4ede2]">
         <div className="mx-auto max-w-7xl px-6 py-24 md:px-10">
-          <SectionTitle eyebrow="04 / SOCIAL DESIGN SYSTEM" title="Four repeatable formats instead of four unrelated posts." />
+          <SectionTitle eyebrow="04 / SOCIAL DESIGN SYSTEM" title="Four repeatable formats instead of four unrelated posts." dark />
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {[
               ['NEW COLLECTION','New product launch'],['FACTORY','Production story'],['QUALITY','Certification / trust'],['CAREERS','Recruitment']
