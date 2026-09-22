@@ -79,20 +79,26 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGci...
 
 ```bash
 # Supabase CLI bilan ishlash
-supabase login
-supabase link --project-ref <PROJECT_REF>
+npx supabase@2.117.0 login
+npx supabase@2.117.0 link --project-ref nwemjkrantwdndjwjvlb
+
+# Production schema'dan baseline olish
+npx supabase@2.117.0 db pull --linked
+
+# Migration holatini tekshirish
+npx supabase@2.117.0 migration list
 
 # Yangi migration
-supabase migration new <change_name>
+npx supabase@2.117.0 migration new <change_name>
 
 # Lokal/linked database bilan migration holatini tekshirish
 supabase migration list
 
 # Migrationlarni qo'llash
-supabase db push
+npx supabase@2.117.0 db push
 ```
 
-> Eslatma: mavjud production bazasining migration history'sini baseline bilan moslashtirish alohida operatsion qadam. Bu repo o'zgarishi production bazaga avtomatik migration qo'llamaydi.
+> Eslatma: mavjud production bazasining migration history'sini baseline bilan moslashtirish alohida operatsion qadam. Supabase CLI db pull remote schema'ni migration sifatida yozadi va history'ni moslashtirish imkonini beradi. db pull uchun Docker va remote Postgres paroli kerak bo'ladi. Bu repo o'zgarishi production schema/data'ni o'zgartirmaydi.
 
 ---
 
